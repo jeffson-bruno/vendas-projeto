@@ -66,7 +66,7 @@
                                 @endphp
                                 <tr style="background-color: {{ $vencida ? '#ffe5e5' : '#e5ffe5' }}">
                                     <td>{{ $index + 1 }}</td>
-                                    <td>R$ {{ number_format($installment->value, 2, ',', '.') }}</td>
+                                    <td>R$ {{ number_format($installment->amount, 2, ',', '.') }}</td>
                                     <td>{{ \Carbon\Carbon::parse($installment->due_date)->format('d/m/Y') }}</td>
                                 </tr>
                             @endforeach
