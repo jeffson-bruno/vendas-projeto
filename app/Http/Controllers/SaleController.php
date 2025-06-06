@@ -123,64 +123,58 @@ class SaleController extends Controller
      * Atualizar uma venda.
      */
     public function update(Request $request, Sale $sale)
-    {
-        DB::beginTransaction();
+{
+    DB::beginTransaction();
 
-        try {
-            // Deletar itens e parcelas antigas
-            $sale->saleItems()->delete();
-            $sale->installments()->delete();
+    try {
+        // Deletar itens e parcelas antigas
+        $sale->saleItems()->delete();
+        $sale->installments()->delete();
 
-            // Calcular novo total
-            $total = 0;
-            foreach ($request->items as $item) {
-                $subtotal = $item['price'] * $item['quantity'];
-                $total += $subtotal;
-            }
-
-            // Atualizar venda
-            $sale->update([
-                'client_id' => $request->client_id,
-                'payment_method_id' => $request->payment_method_id,
-                'total' => $total,
-            ]);
-
-            // Inserir novos itens
-            foreach ($request->items as $item) {
-                SaleItem::create([
-                    'sale_id' => $sale->id,
-                    'product_id' => $item['product_id'],
-                    'quantity' => $item['quantity'],
-                    'price' => $item['price'],
-                    'subtotal' => $item['price'] * $item['quantity'],
-                ]);
-            }
-
-            // Gerar novas parcelas
-            $parcelas = $request->parcelas;
-            $valorParcela = $total / $parcelas;
-            $dataInicial = $request->first_due_date;
-
-            for ($i = 0; $i < $parcelas; $i++) {
-                $dueDate = date('Y-m-d', strtotime("+$i month", strtotime($dataInicial)));
-
-                Installment::create([
-                    'sale_id' => $sale->id,
-                    'due_date' => $dueDate,
-                    'amount' => number_format($valorParcela, 2, '.', ''),
-                    'status' => 'pending',
-                ]);
-            }
-
-            DB::commit();
-
-            return redirect()->route('sales.index')->with('success', 'Venda atualizada com sucesso!');
-
-        } catch (\Exception $e) {
-            DB::rollBack();
-            return back()->with('error', 'Erro ao atualizar a venda: ' . $e->getMessage());
+        // Calcular novo total
+        $total = 0;
+        foreach ($request->items as $item) {
+            $subtotal = $item['price'] * $item['quantity'];
+            $total += $subtotal;
         }
+
+        // Atualizar venda
+        $sale->update([
+            'client_id' => $request->client_id,
+            'payment_method_id' => $request->payment_method_id,
+            'total' => $total,
+        ]);
+
+        // Inserir novos itens
+        foreach ($request->items as $item) {
+            SaleItem::create([
+                'sale_id' => $sale->id,
+                'product_id' => $item['product_id'],
+                'quantity' => $item['quantity'],
+                'price' => $item['price'],
+                'subtotal' => $item['price'] * $item['quantity'],
+            ]);
+        }
+
+        // Salvar as parcelas manualmente
+        foreach ($request->installments as $parcel) {
+            Installment::create([
+                'sale_id' => $sale->id,
+                'due_date' => $parcel['due_date'],
+                'amount' => $parcel['amount'],
+                'status' => 'pending',
+            ]);
+        }
+
+        DB::commit();
+
+        return redirect()->route('sales.index')->with('success', 'Venda atualizada com sucesso!');
+
+    } catch (\Exception $e) {
+        DB::rollBack();
+        return back()->with('error', 'Erro ao atualizar a venda: ' . $e->getMessage());
     }
+}
 
     /**
      * Deletar uma venda.
