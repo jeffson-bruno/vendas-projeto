@@ -1,17 +1,46 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# SellFlow
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
-
-# Projeto de Vendas Laravel
-
-Este é um projeto de teste desenvolvido em Laravel para gerenciar vendas, clientes, produtos e formas de pagamento. O sistema possui funcionalidades básicas como cadastro, edição, exclusão, geração de PDF, e um dashboard com métricas.
+**SellFlow** é um sistema simples de gestão de vendas desenvolvido para fins de estudo e portfólio.  
+O objetivo do projeto é centralizar o controle de produtos, clientes, formas de pagamento e vendas, oferecendo um dashboard intuitivo para acompanhamento de métricas.
 
 ---
+
+## ⚙️ Funcionalidades
+
+### 📊 Dashboard
+- Card com **total de vendas realizadas**.  
+- Card com **total de produtos cadastrados**.  
+- Card com **faturamento total acumulado**.  
+
+### 📦 Produtos
+- Cadastro de novos produtos.  
+- Edição e exclusão de produtos.  
+- Listagem completa na mesma página.  
+
+### 👤 Clientes
+- Cadastro de clientes (nome, e-mail, telefone).  
+- Edição e exclusão de clientes.  
+- Gestão centralizada na página de clientes.  
+
+### 💳 Formas de Pagamento
+- Cadastro de novas formas de pagamento.  
+- Edição e exclusão de formas existentes.  
+- Listagem simples e acessível via Navbar.  
+
+### 🛒 Vendas
+- Cadastro de nova venda.  
+- Seleção de produtos e definição de quantidade.  
+- **Cálculo automático de subtotal** com base nos produtos e quantidades.  
+- Definição da forma de pagamento.  
+- Seleção do cliente responsável pela compra.  
+- Definição de quantidade de parcelas e data da primeira parcela.  
+- Possibilidade de editar datas das parcelas.  
+
+---
+
+## 🎯 Objetivo
+Este projeto tem como objetivo oferecer uma **plataforma prática e intuitiva de vendas**, servindo de exemplo de desenvolvimento fullstack para portfólio, com ênfase em CRUDs organizados, dashboard informativo e usabilidade.
+
 
 ## Requisitos
 
